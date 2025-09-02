@@ -29,9 +29,9 @@ def signUp():
 def afterLogin():
    return render_template('afterLogin.html')
 
-@app.route('/quiz-page')
+@app.route('/quizpage')
 def quiz_page():
-    return render_template('quiz-page.html')
+    return render_template('quizpage.html')
 
 
 @app.route('/memo', methods=['GET'])
