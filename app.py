@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 from pymongo import MongoClient
 client = MongoClient('localhost', 27017)
-db = client.dbjungle
+db = client.todaysquiz
 
 ## HTML을 주는 부분
 @app.route('/')
@@ -31,7 +31,7 @@ def afterLogin():
 
 @app.route('/quizPage')
 def quiz_page():
-    return render_template('quizPage.html')
+   return render_template('quizPage.html')
 
 
 @app.route('/memo', methods=['GET'])
@@ -69,5 +69,24 @@ def post_article():
     db.articles.insert_one(article)
 
     return jsonify({'result': 'success'})
+
+@app.route('/signup_2', methods=['POST'])
+def signup_2():
+   
+   ID_receive = request.form['ID_give']
+   PW_receive = request.form['PW_give']
+   NAME_receive = request.form['NAME_give']
+
+   find_user = db.todaysquiz.find_one({'ID': ID_receive})
+   if find_user is not None:
+      return jsonify({'result': 'fail', 'msg': '이미 존재하는 아이디입니다.'})
+
+   users = {'ID': ID_receive, 'PW': PW_receive, 'NAME': NAME_receive}
+
+   # 3. mongoDB에 데이터를 넣기
+   db.todaysquiz.insert_one(users)
+
+   return jsonify({'result': 'success'})
+
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)

@@ -90,3 +90,27 @@ accordionTitles.forEach((title) => {
     parentItem.classList.toggle("active");
   });
 });
+
+function signup_2() {
+  // 1. 유저가 입력한 데이터를 #post-url과 #post-comment에서 가져오기
+  let ID = $("#ID-input").val();
+  let PW = $("#PW-input").val();
+  let NAME = $("#NAME-input").val();
+
+  // 2. memo에 POST 방식으로 메모 생성 요청하기
+  $.ajax({
+    type: "POST", // POST 방식으로 요청하겠다.
+    url: "/signup_2", // /memo라는 url에 요청하겠다.
+    data: { ID_give: ID, PW_give: PW, NAME_give: NAME }, // 데이터를 주는 방법
+    success: function (response) {
+      // 성공하면
+      if (response["result"] == "success") {
+        alert("회원가입 성공!");
+        // 3. 성공 시 페이지 새로고침하기
+        window.location.href = "/";
+      } else {
+        alert(response['msg']);
+      }
+    },
+  });
+}
