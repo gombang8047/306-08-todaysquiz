@@ -21,6 +21,19 @@ def login():
 def mypage():
    return render_template('mypage.html')
 
+@app.route('/signUp')
+def signUp():
+   return render_template('signUp.html')
+
+@app.route('/afterLogin')
+def afterLogin():
+   return render_template('afterLogin.html')
+
+@app.route('/quiz-page')
+def quiz_page():
+    return render_template('quiz-page.html')
+
+
 @app.route('/memo', methods=['GET'])
 def read_articles():
     # 1. 모든 document 찾기 & _id 값은 출력에서 제외하기
