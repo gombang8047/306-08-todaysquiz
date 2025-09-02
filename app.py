@@ -33,6 +33,9 @@ def afterLogin():
 def quiz_page():
     return render_template('quizPage.html')
 
+@app.route('/grading')
+def grading_page():
+    return render_template('gradingPage.html')
 
 @app.route('/memo', methods=['GET'])
 def read_articles():
