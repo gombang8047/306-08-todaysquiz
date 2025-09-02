@@ -29,9 +29,9 @@ def signUp():
 def afterLogin():
    return render_template('afterLogin.html')
 
-@app.route('/quiz-page')
+@app.route('/quizPage')
 def quiz_page():
-    return render_template('quiz-page.html')
+    return render_template('quizPage.html')
 
 
 @app.route('/memo', methods=['GET'])
@@ -70,4 +70,4 @@ def post_article():
 
     return jsonify({'result': 'success'})
 if __name__ == '__main__':
-   app.run('0.0.0.0',port=5000,debug=True)
+   app.run('0.0.0.0',port=5001,debug=True)
