@@ -108,3 +108,19 @@
 .PW-input {
     width: 98%;
 }
+
+.accordion-content {
+  max-height: 0; /* 초기에는 내용 숨기기 */
+  overflow: hidden;
+  transition: max-height 0.3s ease-out; /* 부드러운 전환 효과 */
+}
+
+/* 제목이 활성화되었을 때 (클릭되었을 때) 내용 보여주기 */
+.accordion-item.active .accordion-content {
+  max-height: 500px; /* 내용이 충분히 보이도록 높이 키우기 */
+}
+
+/* 선택 사항: 제목에 마우스 올렸을 때 커서 모양 바꾸기 */
+.accordion-title {
+  cursor: pointer;
+}

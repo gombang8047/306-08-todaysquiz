@@ -69,3 +69,17 @@ function makeCard(image, url, title, desc, comment) {
                     </div>`; */}
   $("#card-container").append(temp_html);
 }
+
+
+// 모든 아코디언 제목 요소를 선택합니다.
+const accordionTitles = document.querySelectorAll('.accordion-title');
+
+accordionTitles.forEach(title => {
+  title.addEventListener('click', () => {
+    // 클릭된 제목의 부모 요소(전체 아이템)를 가져옵니다.
+    const parentItem = title.parentElement;
+    
+    // 부모 요소에 'active' 클래스를 토글합니다.
+    parentItem.classList.toggle('active');
+  });
+});

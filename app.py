@@ -17,6 +17,10 @@ def home():
 def login():
    return render_template('login.html')
 
+@app.route('/mypage')
+def mypage():
+   return render_template('mypage.html')
+
 @app.route('/memo', methods=['GET'])
 def read_articles():
     # 1. 모든 document 찾기 & _id 값은 출력에서 제외하기
