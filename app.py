@@ -1,5 +1,9 @@
 from flask import Flask, render_template, jsonify, request
+
+from werkzeug.security import generate_password_hash, check_password_hash
+import jwt, datetime
 app = Flask(__name__)
+SECRET_KEY = "supersecret"
 
 import requests
 from bs4 import BeautifulSoup
@@ -37,42 +41,6 @@ def quiz_page():
 def grading_page():
     return render_template('gradingPage.html')
 
-@app.route('/memo', methods=['GET'])
-def read_articles():
-    # 1. 모든 document 찾기 & _id 값은 출력에서 제외하기
-    result = list(db.articles.find({}, {'_id': 0 }))
-    # 2. articles라는 키 값으로 영화정보 내려주기
-    return jsonify({'result':'success', 'articles':result})
-
-## API 역할을 하는 부분
-@app.route('/memo', methods=['POST'])
-def post_article():
-    # 1. 클라이언트로부터 데이터를 받기
-    url_receive = request.form['url_give']  # 클라이언트로부터 url을 받는 부분
-    comment_receive = request.form['comment_give']  # 클라이언트로부터 comment를 받는 부분
-
-    # 2. meta tag를 스크래핑하기
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-    data = requests.get(url_receive, headers=headers)
-    soup = BeautifulSoup(data.text, 'html.parser')
-
-    og_image = soup.select_one('meta[property="og:image"]')
-    og_title = soup.select_one('meta[property="og:title"]')
-    og_description = soup.select_one('meta[property="og:description"]')
-
-    url_title = og_title['content']
-    url_description = og_description['content']
-    url_image = og_image['content']
-
-    article = {'url': url_receive, 'title': url_title, 'desc': url_description, 'image': url_image,
-               'comment': comment_receive}
-
-    # 3. mongoDB에 데이터를 넣기
-    db.articles.insert_one(article)
-
-    return jsonify({'result': 'success'})
-
 @app.route('/signup_2', methods=['POST'])
 def signup_2():
    
@@ -83,8 +51,10 @@ def signup_2():
    find_user = db.todaysquiz.find_one({'ID': ID_receive})
    if find_user is not None:
       return jsonify({'result': 'fail', 'msg': '이미 존재하는 아이디입니다.'})
+   
+   pw_hash = generate_password_hash(PW_receive)
 
-   users = {'ID': ID_receive, 'PW': PW_receive, 'NAME': NAME_receive}
+   users = {'ID': ID_receive, 'PW': pw_hash, 'NAME': NAME_receive}
 
    # 3. mongoDB에 데이터를 넣기
    db.todaysquiz.insert_one(users)
@@ -92,4 +62,4 @@ def signup_2():
    return jsonify({'result': 'success'})
 
 if __name__ == '__main__':
-   app.run('0.0.0.0',port=5000,debug=True)
+   app.run('0.0.0.0',port=5001,debug=True)
