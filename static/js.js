@@ -71,7 +71,7 @@ function makeCard(image, url, title, desc, comment) {
 }
 
 
-// 모든 아코디언 제목 요소를 선택합니다.
+// 모든 아코디언 제목 요소를 선택합니다. -> mypage에서 문제들 온오프
 const accordionTitles = document.querySelectorAll('.accordion-title');
 
 accordionTitles.forEach(title => {
