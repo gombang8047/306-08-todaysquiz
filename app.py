@@ -17,6 +17,18 @@ def home():
 def login():
    return render_template('login.html')
 
+@app.route('/signUp')
+def signUp():
+   return render_template('signUp.html')
+
+@app.route('/afterLogin')
+def afterLogin():
+   return render_template('afterLogin.html')
+
+@app.route('/quiz-page')
+def quiz_page():
+    return render_template('quiz-page.html')
+
 @app.route('/memo', methods=['GET'])
 def read_articles():
     # 1. 모든 document 찾기 & _id 값은 출력에서 제외하기
@@ -53,4 +65,4 @@ def post_article():
 
     return jsonify({'result': 'success'})
 if __name__ == '__main__':
-   app.run('0.0.0.0',port=5000,debug=True)
+   app.run('0.0.0.0',port=5001,debug=True)
